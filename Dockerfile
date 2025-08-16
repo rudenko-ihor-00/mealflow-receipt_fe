@@ -1,5 +1,23 @@
 # Use Node.js 18 Alpine
-FROM node:18-alpine
+FROM node:18-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files first for better caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --legacy-peer-deps --only=production --no-optional
+
+# Copy source code
+COPY . .
+
+# Build the React app
+RUN npm run build --silent
+
+# Production stage
+FROM node:18-alpine AS production
 
 # Set working directory
 WORKDIR /app
@@ -7,14 +25,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (including express for server.js)
-RUN npm ci --legacy-peer-deps
+# Install only production dependencies
+RUN npm ci --legacy-peer-deps --only=production --no-optional
 
-# Copy source code
-COPY . .
+# Copy built app from builder stage
+COPY --from=builder /app/build ./build
 
-# Build the React app
-RUN npm run build
+# Copy server file
+COPY server.js ./
 
 # Expose port
 EXPOSE 80
