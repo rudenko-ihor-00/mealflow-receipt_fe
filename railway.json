@@ -14,5 +14,6 @@
   "variables": {
     "NODE_ENV": "production",
     "PORT": "3000"
-  }
+  },
+  "repository": "https://github.com/rudenko-ihor-00/mealflow-receipt_fe"
 }

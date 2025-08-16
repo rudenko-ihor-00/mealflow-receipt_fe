@@ -52,8 +52,8 @@
 
 1. **Клонуйте репозиторій**
 ```bash
-git clone <repository-url>
-cd mealflow-recipe-app
+git clone https://github.com/rudenko-ihor-00/mealflow-receipt_fe.git
+cd mealflow-receipt_fe
 ```
 
 2. **Встановіть залежності**
