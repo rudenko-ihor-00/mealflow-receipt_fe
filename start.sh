@@ -42,22 +42,51 @@ echo "🔌 Setting PORT to 8080..."
 export PORT=8080
 echo "🔌 PORT is now: $PORT"
 
-# Check if serve is available
-echo "🔍 Checking if serve is available..."
-if command -v serve >/dev/null 2>&1; then
-    echo "✅ serve is available"
-else
-    echo "⚠️ serve not found, will install via npx"
-fi
+# Create simple Express server
+echo "🚀 Creating simple Express server..."
+cat > server.js << 'EOF'
+const express = require('express');
+const path = require('path');
 
-# Start the application
-echo "🚀 Starting MealFlow app on port 8080..."
+const app = express();
+const PORT = process.env.PORT || 8080;
+
+// Serve static files from build directory
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'MealFlow app is running',
+    port: PORT,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Serve React app for all routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+// Start server
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('🚀 Express server is running on port', PORT);
+  console.log('📁 Serving files from:', path.join(__dirname, 'build'));
+  console.log('🌐 Environment:', process.env.NODE_ENV || 'development');
+  console.log('🏥 Healthcheck available at:', `http://0.0.0.0:${PORT}/health`);
+  console.log('🌍 Server accessible from any IP address');
+});
+EOF
+
+echo "✅ Express server created"
+
+# Start the Express server
+echo "🚀 Starting Express server on port 8080..."
 echo "🔌 Final PORT value: $PORT"
-echo "🌐 Starting serve on port 8080..."
+echo "🌐 Starting Express server on 0.0.0.0:8080..."
 
-# Start serve with verbose output and bind to all interfaces
-echo "🌐 Starting serve on 0.0.0.0:8080..."
-echo "🔌 Server will be accessible from any IP address"
-npx serve -s build -l 0.0.0.0:8080 --debug
+# Start Express server
+node server.js
 
-echo "❌ If you see this, serve failed to start"
+echo "❌ If you see this, Express server failed to start"
