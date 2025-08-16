@@ -1,5 +1,5 @@
-# Use Node.js 18 Alpine for smaller image size
-FROM node:18-alpine AS builder
+# Use Node.js 18 Alpine
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies with legacy peer deps to avoid conflicts
+# Install dependencies
 RUN npm ci --legacy-peer-deps
 
 # Copy source code
@@ -16,24 +16,19 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine AS production
-
 # Install serve globally
 RUN npm install -g serve
 
-# Set working directory
-WORKDIR /app
-
-# Copy built app from builder stage
-COPY --from=builder /app/build ./build
+# Make start script executable
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 # Expose port
-EXPOSE 3000
+EXPOSE 8080
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=8080
 
 # Start the application
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["/app/start.sh"]

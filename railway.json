@@ -5,7 +5,7 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "serve -s build -l 3000",
+    "startCommand": "/app/start.sh",
     "healthcheckPath": "/",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
@@ -13,7 +13,7 @@
   },
   "variables": {
     "NODE_ENV": "production",
-    "PORT": "3000"
+    "PORT": "8080"
   },
   "repository": "https://github.com/rudenko-ihor-00/mealflow-receipt_fe"
 }
