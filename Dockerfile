@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Expose port
-EXPOSE 3000
+EXPOSE $PORT
 
 # Set environment variables
 ENV NODE_ENV=production
