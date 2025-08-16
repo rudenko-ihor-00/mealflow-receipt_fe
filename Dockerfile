@@ -29,6 +29,7 @@ EXPOSE 8080
 # Set environment variables
 ENV NODE_ENV=production
 ENV PORT=8080
+ENV RAILWAY_PORT=8080
 
 # Start the application
 CMD ["/app/start.sh"]
