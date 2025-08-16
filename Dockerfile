@@ -1,5 +1,5 @@
 # Use Node.js 18 Alpine
-FROM node:18-alpine AS builder
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
@@ -8,42 +8,19 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --legacy-peer-deps --only=production --no-optional
+RUN npm ci --legacy-peer-deps
 
 # Copy source code
 COPY . .
 
 # Build the React app
-RUN npm run build --silent
-
-# Production stage
-FROM node:18-alpine AS production
-
-# Set working directory
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install only production dependencies
-RUN npm ci --legacy-peer-deps --only=production --no-optional
-
-# Copy built app from builder stage
-COPY --from=builder /app/build ./build
-
-# Copy start script
-COPY start.sh ./
-
-# Make start script executable
-RUN chmod +x start.sh
+RUN npm run build
 
 # Expose port
-EXPOSE 8080
+EXPOSE 3000
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=8080
-ENV RAILWAY_PORT=8080
 
-# Start the application with logging
-CMD ["/bin/sh", "-c", "echo '🐳 Docker container starting...' && echo '📁 Container contents:' && ls -la && echo '🚀 Executing start.sh...' && /app/start.sh"]
+# Start the application
+CMD ["node", "server.js"]

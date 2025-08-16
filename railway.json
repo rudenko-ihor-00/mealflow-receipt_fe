@@ -5,15 +5,13 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "/bin/sh -c 'echo \"🚂 Railway starting...\" && echo \"📁 Container contents:\" && ls -la && echo \"🚀 Executing start.sh...\" && /app/start.sh'",
+    "startCommand": "node server.js",
     "healthcheckPath": "/health",
-    "healthcheckTimeout": 300,
+    "healthcheckTimeout": 900,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   },
   "variables": {
-    "NODE_ENV": "production",
-    "PORT": "8080"
-  },
-  "repository": "https://github.com/rudenko-ihor-00/mealflow-receipt_fe"
+    "NODE_ENV": "production"
+  }
 }
