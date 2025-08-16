@@ -31,8 +31,11 @@ RUN npm ci --legacy-peer-deps --only=production --no-optional
 # Copy built app from builder stage
 COPY --from=builder /app/build ./build
 
-# Copy server file
-COPY server.js ./
+# Copy start script
+COPY start.sh ./
+
+# Make start script executable
+RUN chmod +x start.sh
 
 # Expose port
 EXPOSE 3000
@@ -43,4 +46,4 @@ ENV PORT=3000
 ENV RAILWAY_PORT=3000
 
 # Start the application
-CMD ["npm", "run", "server"]
+CMD ["/app/start.sh"]

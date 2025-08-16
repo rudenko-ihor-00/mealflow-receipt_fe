@@ -3,8 +3,8 @@
 # Change to app directory
 cd /app
 
-# Force port to 8080 (override Railway's default PORT=3000)
-export PORT=8080
+# Force port to 3000 (Railway's default)
+export PORT=3000
 
 # Check if build directory exists
 if [ ! -d "build" ]; then
@@ -13,5 +13,5 @@ if [ ! -d "build" ]; then
 fi
 
 # Start the application
-echo "Starting MealFlow app on port 8080..."
-npx serve -s build -l 8080
+echo "Starting MealFlow app on port 3000..."
+npx serve -s build -l 3000
