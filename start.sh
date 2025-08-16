@@ -55,7 +55,9 @@ echo "🚀 Starting MealFlow app on port 8080..."
 echo "🔌 Final PORT value: $PORT"
 echo "🌐 Starting serve on port 8080..."
 
-# Start serve with verbose output
-npx serve -s build -l 8080 --debug
+# Start serve with verbose output and bind to all interfaces
+echo "🌐 Starting serve on 0.0.0.0:8080..."
+echo "🔌 Server will be accessible from any IP address"
+npx serve -s build -l 0.0.0.0:8080 --debug
 
 echo "❌ If you see this, serve failed to start"
