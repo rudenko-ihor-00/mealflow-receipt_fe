@@ -10,3 +10,4 @@ restartPolicyMaxRetries = 15
 
 [deploy.envs]
 NODE_ENV = "production"
+PORT = "3000"
