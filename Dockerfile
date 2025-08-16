@@ -45,5 +45,5 @@ ENV NODE_ENV=production
 ENV PORT=8080
 ENV RAILWAY_PORT=8080
 
-# Start the application
-CMD ["/app/start.sh"]
+# Start the application with logging
+CMD ["/bin/sh", "-c", "echo '🐳 Docker container starting...' && echo '📁 Container contents:' && ls -la && echo '🚀 Executing start.sh...' && /app/start.sh"]
