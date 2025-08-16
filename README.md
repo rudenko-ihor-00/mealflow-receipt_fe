@@ -1,46 +1,253 @@
-# Getting Started with Create React App
+# 🍳 MealFlow - Рецепти з усього світу
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Сучасна веб-платформа для пошуку, збереження та ділення кулінарними рецептами. Побудована з використанням React 18, TypeScript та Tailwind CSS.
 
-## Available Scripts
+## ✨ Особливості
 
-In the project directory, you can run:
+- 🔍 **Розширений пошук** - пошук за назвою, інгредієнтами, тегами та кухнею
+- 🎯 **Фільтрація** - за складністю, часом приготування, кухнею світу
+- ❤️ **Улюблені рецепти** - зберігайте та організовуйте улюблені страви
+- 📱 **Адаптивний дизайн** - працює на всіх пристроях
+- 🚀 **Швидка продуктивність** - оптимізовано для швидкого завантаження
+- 🎨 **Сучасний UI/UX** - красиві анімації та переходи
 
-### `npm start`
+## 🛠️ Технологічний стек
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Frontend
+- **React 18** - основна бібліотека для UI
+- **TypeScript** - типізація та безпека коду
+- **React Router DOM** - навігація та роутинг
+- **Redux Toolkit** - управління глобальним станом
+- **Tailwind CSS** - utility-first CSS фреймворк
+- **Framer Motion** - анімації та переходи
+- **Lucide React** - іконки
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Backend & Infrastructure
+- **Express.js** - проксі сервер для обходу CORS
+- **Axios** - HTTP клієнт для API запитів
+- **Docker** - контейнеризація
+- **Railway** - хостинг та деплой
 
-### `npm test`
+## 🚀 Швидкий старт
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Вимоги
+- Node.js 18+ 
+- npm 8+
 
-### `npm run build`
+### Встановлення
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Клонуйте репозиторій**
+```bash
+git clone <repository-url>
+cd mealflow-recipe-app
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Встановіть залежності**
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Запустіть проект**
+```bash
+# Розробка (тільки фронтенд)
+npm start
 
-### `npm run eject`
+# Розробка з сервером
+npm run dev
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Тільки сервер
+npm run server
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. **Відкрийте браузер**
+- Frontend: http://localhost:3000
+- API: http://localhost:3001
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 📁 Структура проекту
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+src/
+├── components/          # React компоненти
+│   ├── ui/             # UI компоненти (RecipeCard, etc.)
+│   └── layout/         # Layout компоненти (Header, Footer)
+├── features/            # Feature-based структура
+│   ├── recipes/        # Логіка рецептів
+│   ├── search/         # Пошук та фільтрація
+│   └── auth/           # Аутентифікація
+├── store/              # Redux store та slices
+├── services/           # API сервіси та зовнішні інтеграції
+├── types/              # TypeScript типи
+├── utils/              # Утиліти та допоміжні функції
+├── hooks/              # Custom React hooks
+└── assets/             # Статичні ресурси
+```
 
-## Learn More
+## 🐳 Docker
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Збірка образу
+```bash
+npm run docker:build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Запуск контейнера
+```bash
+npm run docker:run
+```
+
+### Зупинка контейнера
+```bash
+npm run docker:stop
+```
+
+## 🚂 Деплой на Railway
+
+1. **Підготуйте проект**
+```bash
+npm run build
+```
+
+2. **Деплой**
+```bash
+npm run deploy:railway
+```
+
+## 🔧 Доступні скрипти
+
+```bash
+# Розробка
+npm start              # Запуск React dev сервера
+npm run dev           # Запуск фронтенду + бекенду
+npm run server        # Запуск тільки Express сервера
+
+# Збірка
+npm run build         # Збірка для продакшену
+npm run type-check    # Перевірка TypeScript типів
+
+# Якість коду
+npm run lint          # ESLint перевірка
+npm run lint:fix      # Автоматичне виправлення ESLint помилок
+npm run format        # Prettier форматування
+
+# Docker
+npm run docker:build  # Збірка Docker образу
+npm run docker:run    # Запуск Docker контейнера
+```
+
+## 🌐 API Endpoints
+
+### Рецепти
+- `GET /api/recipes` - список рецептів з фільтрами
+- `GET /api/recipes/:id` - деталі рецепту
+- `GET /api/recipes/cuisine/:cuisine` - рецепти за кухнею
+- `GET /api/recipes/tags` - рецепти за тегами
+- `GET /api/recipes/search` - пошук рецептів
+
+### Аутентифікація
+- `POST /api/auth/login` - вхід користувача
+- `POST /api/auth/register` - реєстрація
+- `GET /api/auth/me` - поточний користувач
+- `POST /api/auth/logout` - вихід
+
+## 🎨 Кастомізація
+
+### Кольори
+Основні кольори налаштовані в `tailwind.config.js`:
+
+```javascript
+colors: {
+  primary: {
+    50: '#fef7ee',
+    500: '#f17a1a',
+    600: '#e25f0f',
+    // ...
+  },
+  secondary: {
+    50: '#f0f9ff',
+    500: '#0ea5e9',
+    // ...
+  }
+}
+```
+
+### Анімації
+Анімації налаштовані в `tailwind.config.js` та використовують Framer Motion.
+
+## 📱 Адаптивність
+
+Проект повністю адаптивний та оптимізований для:
+- 📱 Мобільні пристрої (320px+)
+- 📱 Планшети (768px+)
+- 💻 Десктопи (1024px+)
+- 🖥️ Великі екрани (1280px+)
+
+## 🔒 Безпека
+
+- Валідація вхідних даних
+- Захист від XSS атак
+- Безпечне зберігання токенів
+- CORS налаштування
+
+## 🧪 Тестування
+
+```bash
+npm test              # Запуск тестів
+npm test -- --watch  # Тести в режимі спостереження
+npm test -- --coverage # Тести з покриттям
+```
+
+## 📊 Продуктивність
+
+- Lazy loading компонентів
+- Оптимізовані зображення
+- Кешування Redux
+- Bundle splitting
+
+## 🤝 Внесок
+
+1. Fork проект
+2. Створіть feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit зміни (`git commit -m 'Add some AmazingFeature'`)
+4. Push до branch (`git push origin feature/AmazingFeature`)
+5. Відкрийте Pull Request
+
+## 📄 Ліцензія
+
+Цей проект ліцензовано під MIT License - дивіться файл [LICENSE](LICENSE) для деталей.
+
+## 👥 Команда
+
+- **Розробка** - MealFlow Team
+- **Дизайн** - MealFlow Design Team
+- **Тестування** - MealFlow QA Team
+
+## 📞 Підтримка
+
+Якщо у вас є питання або проблеми:
+
+- 📧 Email: support@mealflow.com
+- 🐛 Issues: [GitHub Issues](link-to-issues)
+- 📖 Документація: [Wiki](link-to-wiki)
+
+## 🎯 Roadmap
+
+### v1.0 (MVP) ✅
+- [x] Базовий функціонал рецептів
+- [x] Пошук та фільтрація
+- [x] Адаптивний дизайн
+- [x] Mock дані
+
+### v1.1 (Найближчий час)
+- [ ] Реальна база даних
+- [ ] Аутентифікація користувачів
+- [ ] Завантаження зображень
+- [ ] Коментарі та оцінки
+
+### v1.2 (Майбутнє)
+- [ ] Мобільний додаток
+- [ ] Соціальні функції
+- [ ] AI рекомендації
+- [ ] Мультимовність
+
+---
+
+**Зроблено з ❤️ в Україні**
