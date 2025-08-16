@@ -17,12 +17,12 @@ COPY . .
 RUN npm run build
 
 # Expose port
-EXPOSE 8080
+EXPOSE 3000
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=8080
-ENV RAILWAY_PORT=8080
+ENV PORT=3000
+ENV RAILWAY_PORT=3000
 
 # Start the application
 CMD ["node", "server.js"]
