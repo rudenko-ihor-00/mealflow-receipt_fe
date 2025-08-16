@@ -16,13 +16,6 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Install serve globally
-RUN npm install -g serve
-
-# Make start script executable
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
-
 # Expose port
 EXPOSE 8080
 
@@ -32,4 +25,4 @@ ENV PORT=8080
 ENV RAILWAY_PORT=8080
 
 # Start the application
-CMD ["/app/start.sh"]
+CMD ["node", "server.js"]
