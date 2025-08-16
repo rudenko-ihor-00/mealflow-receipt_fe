@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
+# Install dependencies (including express for server.js)
 RUN npm ci --legacy-peer-deps
 
 # Copy source code
@@ -25,4 +25,4 @@ ENV PORT=3000
 ENV RAILWAY_PORT=3000
 
 # Start the application
-CMD ["node", "server.js"]
+CMD ["npm", "run", "server"]
