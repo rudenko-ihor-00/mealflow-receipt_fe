@@ -175,7 +175,7 @@ export const mockRecipes: Recipe[] = [
     title: "Тірамісу",
     description: "Італійський десерт з кавою та маскарпоне",
     image:
-      "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&h=600&fit=crop",
+      "https://ulichnayaeda.com.ua/wp-content/uploads/2024/09/maxresdefault.jpg",
     prepTime: 30,
     cookTime: 0,
     servings: 6,
