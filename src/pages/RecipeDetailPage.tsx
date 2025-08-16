@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -14,19 +14,22 @@ import {
   Globe,
   Calendar,
   User,
+  ShoppingCart,
 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { fetchRecipeById, toggleFavorite } from "../store/slices/recipeSlice";
 import Layout from "../components/layout/Layout";
+import { generateOrderLink } from "../services/api/mealflowApi";
 
 const RecipeDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const { currentRecipe, isLoading, error } = useAppSelector(
-    (state) => state.recipes,
+    (state) => state.recipes
   );
   const { favorites } = useAppSelector((state) => state.recipes);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const [isOrdering, setIsOrdering] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -99,6 +102,21 @@ const RecipeDetailPage: React.FC = () => {
       // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href);
       alert("Посилання скопійовано в буфер обміну!");
+    }
+  };
+
+  const handleOrderIngredients = async () => {
+    if (!currentRecipe) return;
+
+    setIsOrdering(true);
+    try {
+      const orderLink = await generateOrderLink(currentRecipe.ingredients);
+      window.open(orderLink, "_blank");
+    } catch (error) {
+      console.error("Error ordering ingredients:", error);
+      alert("Не вдалося сформувати замовлення. Спробуйте ще раз.");
+    } finally {
+      setIsOrdering(false);
     }
   };
 
@@ -261,6 +279,25 @@ const RecipeDetailPage: React.FC = () => {
                 ))}
               </div>
 
+              {/* Order Ingredients Button */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <button
+                  onClick={handleOrderIngredients}
+                  disabled={isOrdering}
+                  className="w-full bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  <span>
+                    {isOrdering
+                      ? "Формуємо замовлення..."
+                      : "Замовити інгредієнти"}
+                  </span>
+                </button>
+                <p className="text-xs text-gray-500 text-center mt-2">
+                  Відкриється в новій вкладці
+                </p>
+              </div>
+
               {/* Nutrition Info */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <h4 className="text-lg font-semibold text-gray-900 mb-3">
@@ -340,7 +377,7 @@ const RecipeDetailPage: React.FC = () => {
                     </h4>
                     <p className="text-gray-700">
                       {new Date(currentRecipe.createdAt).toLocaleDateString(
-                        "uk-UA",
+                        "uk-UA"
                       )}
                     </p>
                   </div>

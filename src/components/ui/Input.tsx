@@ -36,7 +36,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       className = "",
       ...props
     },
-    ref,
+    ref
   ) => {
     const baseClasses =
       "w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
@@ -93,7 +93,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
       </div>
     );
-  },
+  }
 );
 
 Input.displayName = "Input";

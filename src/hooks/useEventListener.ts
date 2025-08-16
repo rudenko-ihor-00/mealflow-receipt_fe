@@ -4,7 +4,7 @@ export function useEventListener(
   eventName: string,
   handler: (event: Event) => void,
   element: Element | Window | Document = window,
-  options?: boolean | AddEventListenerOptions,
+  options?: boolean | AddEventListenerOptions
 ) {
   const savedHandler = useRef(handler);
 

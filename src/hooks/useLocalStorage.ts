@@ -35,7 +35,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         console.log(`Error setting localStorage key "${key}":`, error);
       }
     },
-    [key, storedValue],
+    [key, storedValue]
   );
 
   // Remove from local storage
@@ -63,7 +63,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         } catch (error) {
           console.log(
             `Error parsing localStorage value for key "${key}":`,
-            error,
+            error
           );
         }
       }

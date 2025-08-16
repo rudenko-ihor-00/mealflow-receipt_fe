@@ -44,7 +44,7 @@ export const login = createAsyncThunk(
     } catch (error) {
       return rejectWithValue("Invalid email or password");
     }
-  },
+  }
 );
 
 // Async thunk for logout
@@ -72,7 +72,7 @@ export const getCurrentUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue("User not authenticated");
     }
-  },
+  }
 );
 
 const authSlice = createSlice({
@@ -95,7 +95,7 @@ const authSlice = createSlice({
     removeFromFavorites: (state, action: PayloadAction<string>) => {
       if (state.user) {
         state.user.favorites = state.user.favorites.filter(
-          (id) => id !== action.payload,
+          (id) => id !== action.payload
         );
       }
     },

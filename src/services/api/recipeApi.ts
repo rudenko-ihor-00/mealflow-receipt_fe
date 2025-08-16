@@ -26,7 +26,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 // Response interceptor for error handling
@@ -38,7 +38,7 @@ api.interceptors.response.use(
       window.location.href = "/login";
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 // Recipe API endpoints
@@ -47,7 +47,7 @@ export const recipeApi = {
   getRecipes: async (
     filters: RecipeFilters,
     page: number = 1,
-    limit: number = 12,
+    limit: number = 12
   ): Promise<PaginatedResponse<Recipe>> => {
     const params = new URLSearchParams();
 
@@ -63,7 +63,7 @@ export const recipeApi = {
     params.append("limit", limit.toString());
 
     const response = await api.get<PaginatedResponse<Recipe>>(
-      `/recipes?${params.toString()}`,
+      `/recipes?${params.toString()}`
     );
     return response.data;
   },
@@ -76,7 +76,7 @@ export const recipeApi = {
 
   // Create new recipe
   createRecipe: async (
-    recipe: Omit<Recipe, "id" | "createdAt" | "updatedAt">,
+    recipe: Omit<Recipe, "id" | "createdAt" | "updatedAt">
   ): Promise<Recipe> => {
     const response = await api.post<ApiResponse<Recipe>>("/recipes", recipe);
     return response.data.data;
@@ -85,11 +85,11 @@ export const recipeApi = {
   // Update recipe
   updateRecipe: async (
     id: string,
-    recipe: Partial<Recipe>,
+    recipe: Partial<Recipe>
   ): Promise<Recipe> => {
     const response = await api.put<ApiResponse<Recipe>>(
       `/recipes/${id}`,
-      recipe,
+      recipe
     );
     return response.data.data;
   },
@@ -103,10 +103,10 @@ export const recipeApi = {
   getRecipesByCuisine: async (
     cuisine: string,
     page: number = 1,
-    limit: number = 12,
+    limit: number = 12
   ): Promise<PaginatedResponse<Recipe>> => {
     const response = await api.get<PaginatedResponse<Recipe>>(
-      `/recipes/cuisine/${cuisine}?page=${page}&limit=${limit}`,
+      `/recipes/cuisine/${cuisine}?page=${page}&limit=${limit}`
     );
     return response.data;
   },
@@ -115,7 +115,7 @@ export const recipeApi = {
   getRecipesByTags: async (
     tags: string[],
     page: number = 1,
-    limit: number = 12,
+    limit: number = 12
   ): Promise<PaginatedResponse<Recipe>> => {
     const params = new URLSearchParams();
     tags.forEach((tag) => params.append("tags", tag));
@@ -123,7 +123,7 @@ export const recipeApi = {
     params.append("limit", limit.toString());
 
     const response = await api.get<PaginatedResponse<Recipe>>(
-      `/recipes/tags?${params.toString()}`,
+      `/recipes/tags?${params.toString()}`
     );
     return response.data;
   },
@@ -132,10 +132,10 @@ export const recipeApi = {
   searchRecipes: async (
     query: string,
     page: number = 1,
-    limit: number = 12,
+    limit: number = 12
   ): Promise<PaginatedResponse<Recipe>> => {
     const response = await api.get<PaginatedResponse<Recipe>>(
-      `/recipes/search?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`,
+      `/recipes/search?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
     );
     return response.data;
   },
@@ -143,7 +143,7 @@ export const recipeApi = {
   // Get popular recipes
   getPopularRecipes: async (limit: number = 10): Promise<Recipe[]> => {
     const response = await api.get<ApiResponse<Recipe[]>>(
-      `/recipes/popular?limit=${limit}`,
+      `/recipes/popular?limit=${limit}`
     );
     return response.data.data;
   },
@@ -151,7 +151,7 @@ export const recipeApi = {
   // Get recent recipes
   getRecentRecipes: async (limit: number = 10): Promise<Recipe[]> => {
     const response = await api.get<ApiResponse<Recipe[]>>(
-      `/recipes/recent?limit=${limit}`,
+      `/recipes/recent?limit=${limit}`
     );
     return response.data.data;
   },
@@ -164,10 +164,10 @@ export const recipeApi = {
   // Get user favorites
   getFavorites: async (
     page: number = 1,
-    limit: number = 12,
+    limit: number = 12
   ): Promise<PaginatedResponse<Recipe>> => {
     const response = await api.get<PaginatedResponse<Recipe>>(
-      `/recipes/favorites?page=${page}&limit=${limit}`,
+      `/recipes/favorites?page=${page}&limit=${limit}`
     );
     return response.data;
   },

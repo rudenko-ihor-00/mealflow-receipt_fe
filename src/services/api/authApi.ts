@@ -32,7 +32,7 @@ export const authApi = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     const response = await api.post<ApiResponse<AuthResponse>>(
       "/auth/login",
-      credentials,
+      credentials
     );
     return response.data.data;
   },
@@ -41,7 +41,7 @@ export const authApi = {
   register: async (data: RegisterData): Promise<AuthResponse> => {
     const response = await api.post<ApiResponse<AuthResponse>>(
       "/auth/register",
-      data,
+      data
     );
     return response.data.data;
   },
@@ -100,7 +100,7 @@ export const authApi = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      },
+      }
     );
 
     return response.data.data;

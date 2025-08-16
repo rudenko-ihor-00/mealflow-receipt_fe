@@ -21,28 +21,28 @@ export const useToast = () => {
     (title: string, message?: string, options?: Partial<ToastData>) => {
       return addToast({ type: "success", title, message, ...options });
     },
-    [addToast],
+    [addToast]
   );
 
   const error = useCallback(
     (title: string, message?: string, options?: Partial<ToastData>) => {
       return addToast({ type: "error", title, message, ...options });
     },
-    [addToast],
+    [addToast]
   );
 
   const warning = useCallback(
     (title: string, message?: string, options?: Partial<ToastData>) => {
       return addToast({ type: "warning", title, message, ...options });
     },
-    [addToast],
+    [addToast]
   );
 
   const info = useCallback(
     (title: string, message?: string, options?: Partial<ToastData>) => {
       return addToast({ type: "info", title, message, ...options });
     },
-    [addToast],
+    [addToast]
   );
 
   const clearAll = useCallback(() => {

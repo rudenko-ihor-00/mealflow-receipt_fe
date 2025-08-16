@@ -23,7 +23,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       className = "",
       ...props
     },
-    ref,
+    ref
   ) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (onChange) {
@@ -76,7 +76,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         )}
       </label>
     );
-  },
+  }
 );
 
 Checkbox.displayName = "Checkbox";

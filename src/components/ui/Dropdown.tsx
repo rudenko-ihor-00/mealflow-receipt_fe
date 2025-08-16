@@ -54,7 +54,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const selectedOption = options.find((option) => option.value === value);
   const filteredOptions = searchable
     ? options.filter((option) =>
-        option.label.toLowerCase().includes(searchQuery.toLowerCase()),
+        option.label.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : options;
 

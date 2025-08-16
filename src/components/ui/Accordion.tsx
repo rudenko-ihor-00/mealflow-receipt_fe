@@ -44,7 +44,7 @@ const Accordion: React.FC<AccordionProps> = ({
       setOpenItems((prev) =>
         prev.includes(itemId)
           ? prev.filter((id) => id !== itemId)
-          : [...prev, itemId],
+          : [...prev, itemId]
       );
     } else {
       setOpenItems((prev) => (prev.includes(itemId) ? [] : [itemId]));

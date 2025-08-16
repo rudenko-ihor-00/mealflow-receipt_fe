@@ -12,7 +12,7 @@ export function useThrottle<T>(value: T, delay: number): T {
           lastExecuted.current = Date.now();
         }
       },
-      delay - (Date.now() - lastExecuted.current),
+      delay - (Date.now() - lastExecuted.current)
     );
 
     return () => {

@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production
+RUN npm ci
 
 # Copy source code
 COPY . .
@@ -16,15 +16,15 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Install production dependencies for Express server
-RUN npm install express cors
+# Install serve to serve static files
+RUN npm install -g serve
 
 # Expose port
-EXPOSE 3001
+EXPOSE 3000
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=3001
+ENV PORT=3000
 
 # Start the application
-CMD ["node", "server.js"]
+CMD ["serve", "-s", "build", "-l", "3000"]

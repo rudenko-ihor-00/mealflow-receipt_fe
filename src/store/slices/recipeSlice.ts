@@ -47,32 +47,32 @@ export const fetchRecipes = createAsyncThunk(
               .toLowerCase()
               .includes(filters.search!.toLowerCase()) ||
             recipe.tags.some((tag) =>
-              tag.toLowerCase().includes(filters.search!.toLowerCase()),
-            ),
+              tag.toLowerCase().includes(filters.search!.toLowerCase())
+            )
         );
       }
 
       if (filters.cuisine) {
         filteredRecipes = filteredRecipes.filter(
-          (recipe) => recipe.cuisine === filters.cuisine,
+          (recipe) => recipe.cuisine === filters.cuisine
         );
       }
 
       if (filters.difficulty) {
         filteredRecipes = filteredRecipes.filter(
-          (recipe) => recipe.difficulty === filters.difficulty,
+          (recipe) => recipe.difficulty === filters.difficulty
         );
       }
 
       if (filters.maxTime) {
         filteredRecipes = filteredRecipes.filter(
-          (recipe) => recipe.prepTime + recipe.cookTime <= filters.maxTime!,
+          (recipe) => recipe.prepTime + recipe.cookTime <= filters.maxTime!
         );
       }
 
       if (filters.tags && filters.tags.length > 0) {
         filteredRecipes = filteredRecipes.filter((recipe) =>
-          filters.tags!.some((tag) => recipe.tags.includes(tag)),
+          filters.tags!.some((tag) => recipe.tags.includes(tag))
         );
       }
 
@@ -91,7 +91,7 @@ export const fetchRecipes = createAsyncThunk(
     } catch (error) {
       return rejectWithValue("Failed to fetch recipes");
     }
-  },
+  }
 );
 
 // Async thunk for fetching single recipe
@@ -110,7 +110,7 @@ export const fetchRecipeById = createAsyncThunk(
     } catch (error) {
       return rejectWithValue("Failed to fetch recipe");
     }
-  },
+  }
 );
 
 const recipeSlice = createSlice({

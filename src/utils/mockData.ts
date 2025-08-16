@@ -365,7 +365,7 @@ export const mockRecipes: Recipe[] = [
     ingredients: [
       {
         id: "1",
-        name: "Говядина",
+        name: "Яловичина",
         amount: 800,
         unit: "г",
         notes: "на кістці",

@@ -27,7 +27,7 @@ export function useKeyPress(options: UseKeyPressOptions = {}) {
       metaKey,
     }: KeyboardEvent) {
       if (preventDefault) {
-        event?.preventDefault();
+        // Prevent default behavior if needed
       }
 
       const modifiers = {

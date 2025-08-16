@@ -38,7 +38,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ({
     (id: string) => {
       onRemove(id);
     },
-    [onRemove],
+    [onRemove]
   );
 
   return (
