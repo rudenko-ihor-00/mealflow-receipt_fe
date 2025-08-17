@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Clock,
   Users,
+  ChefHat,
+  ShoppingCart,
+  Copy,
+  ExternalLink,
   Heart,
   Share2,
   Bookmark,
   Star,
   ArrowLeft,
   Timer,
-  ChefHat,
   Globe,
   Calendar,
   User,
-  ShoppingCart,
 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { fetchRecipeById, toggleFavorite } from "../store/slices/recipeSlice";
 import Layout from "../components/layout/Layout";
 import { generateOrderLink } from "../services/api/mealflowApi";
+import { safeOpenUrl } from "../utils/browserUtils";
+import { Recipe } from "../types";
 
 const RecipeDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { currentRecipe, isLoading, error } = useAppSelector(
     (state) => state.recipes
@@ -30,6 +35,9 @@ const RecipeDetailPage: React.FC = () => {
   const { favorites } = useAppSelector((state) => state.recipes);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const [isOrdering, setIsOrdering] = useState(false);
+  const [orderLink, setOrderLink] = useState<string | null>(null);
+  const [orderLinkGenerated, setOrderLinkGenerated] = useState(false);
+  const [orderError, setOrderError] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -106,17 +114,55 @@ const RecipeDetailPage: React.FC = () => {
   };
 
   const handleOrderIngredients = async () => {
-    if (!currentRecipe) return;
-
-    setIsOrdering(true);
     try {
-      const orderLink = await generateOrderLink(currentRecipe.ingredients);
-      window.open(orderLink, "_blank");
+      setIsOrdering(true);
+      setOrderError(null);
+      setOrderLink(null);
+      setOrderLinkGenerated(false);
+      
+      const link = await generateOrderLink(currentRecipe.ingredients);
+      console.log("🔗 Посилання для замовлення:", link);
+      
+      setOrderLink(link);
+      setOrderLinkGenerated(true);
+      
+      // Спробуємо автоматично відкрити
+      const success = safeOpenUrl(link, "_blank", true);
+      
+      if (!success) {
+        console.log("⚠️ Не вдалося відкрити посилання автоматично");
+        setOrderError("Браузер заблокував автоматичне відкриття. Використайте кнопки нижче.");
+      }
     } catch (error) {
       console.error("Error ordering ingredients:", error);
-      alert("Не вдалося сформувати замовлення. Спробуйте ще раз.");
+      setOrderError("Не вдалося сформувати посилання для замовлення. Спробуйте ще раз.");
     } finally {
       setIsOrdering(false);
+    }
+  };
+
+  const handleManualOpen = () => {
+    if (orderLink) {
+      safeOpenUrl(orderLink, "_blank", true);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    if (orderLink) {
+      try {
+        await navigator.clipboard.writeText(orderLink);
+        alert("Посилання скопійовано в буфер обміну!");
+      } catch (error) {
+        console.error("Помилка копіювання:", error);
+        // Fallback для старих браузерів
+        const textArea = document.createElement("textarea");
+        textArea.value = orderLink;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        alert("Посилання скопійовано в буфер обміну!");
+      }
     }
   };
 
@@ -296,6 +342,43 @@ const RecipeDetailPage: React.FC = () => {
                 <p className="text-xs text-gray-500 text-center mt-2">
                   Відкриється в новій вкладці
                 </p>
+
+                {/* Error Display */}
+                {orderError && (
+                  <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm text-red-800 text-center">
+                      ⚠️ {orderError}
+                    </p>
+                  </div>
+                )}
+
+                {/* Generated Order Link */}
+                {orderLinkGenerated && orderLink && (
+                  <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 className="text-sm font-medium text-green-800 mb-2">
+                      ✅ Посилання для замовлення готове
+                    </h4>
+                    <div className="space-y-2">
+                      <button
+                        onClick={handleManualOpen}
+                        className="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-3 rounded-md transition-colors duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Відкрити посилання</span>
+                      </button>
+                      <button
+                        onClick={handleCopyLink}
+                        className="w-full bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium py-2 px-3 rounded-md transition-colors duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <Copy className="w-4 h-4" />
+                        <span>Скопіювати посилання</span>
+                      </button>
+                    </div>
+                    <p className="text-xs text-green-600 text-center mt-2">
+                      Якщо посилання не відкрилося автоматично, використайте кнопки вище
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Nutrition Info */}
