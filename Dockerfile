@@ -1,26 +1,26 @@
-# Use Node.js 18 Alpine
+# Використовуємо офіційний Node.js образ
 FROM node:18-alpine
 
-# Set working directory
+# Встановлюємо робочу директорію
 WORKDIR /app
 
-# Copy package files first for better caching
+# Копіюємо package.json та package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --legacy-peer-deps
+# Встановлюємо залежності (включаючи express)
+RUN npm ci
 
-# Copy source code
+# Копіюємо весь код
 COPY . .
 
-# Build the React app
+# Білдимо додаток
 RUN npm run build
 
-# Expose port
+# Встановлюємо змінну PORT для Railway
+ENV PORT=3000
+
+# Відкриваємо порт
 EXPOSE $PORT
 
-# Set environment variables
-ENV NODE_ENV=production
-
-# Start the application
-CMD ["node", "server.js"]
+# Railway використовує свій startCommand, тому CMD не потрібен
+# CMD node server.js

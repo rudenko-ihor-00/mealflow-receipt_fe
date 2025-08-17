@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, x-api-key');
   
   if (req.method === 'OPTIONS') {
     res.sendStatus(200);
@@ -20,22 +20,15 @@ app.use((req, res, next) => {
 
 // API proxy для обходу CORS
 app.use('/api', createProxyMiddleware({
-  target: 'https://mealflow-marketpalcebe-production.up.railway.app',
+  target: 'https://web-production-51d5.up.railway.app',
   changeOrigin: true,
-  pathRewrite: {
-    '^/api': '/api'
-  },
   onProxyReq: (proxyReq, req, res) => {
     // Додаємо API ключ
-    proxyReq.setHeader('Authorization', 'Bearer test-api-key-67890');
+    proxyReq.setHeader('x-api-key', 'mealflow-api-key-2025-secure');
     console.log(`🔄 Proxying ${req.method} ${req.url} to backend`);
   },
   onProxyRes: (proxyRes, req, res) => {
     console.log(`✅ Backend response: ${proxyRes.statusCode} for ${req.url}`);
-  },
-  onError: (err, req, res) => {
-    console.error(`💥 Proxy error for ${req.url}:`, err.message);
-    res.status(500).json({ error: 'Proxy error', message: err.message });
   }
 }));
 

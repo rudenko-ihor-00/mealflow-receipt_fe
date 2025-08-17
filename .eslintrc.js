@@ -1,11 +1,15 @@
 module.exports = {
   extends: [
     'react-app',
-    'react-app/jest'
+    'react-app/jest',
+    'prettier'
+  ],
+  plugins: [
+    'prettier'
   ],
   rules: {
-    'prettier/prettier': 'off', // Вимкнути правила Prettier в ESLint
-    '@typescript-eslint/no-unused-vars': 'warn', // Зробити попередження замість помилки
-    'react-hooks/exhaustive-deps': 'warn' // Зробити попередження замість помилки
+    'prettier/prettier': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'no-unused-vars': 'warn'
   }
 };
